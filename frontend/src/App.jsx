@@ -1,11 +1,46 @@
 
-function App() {
+import { Hero} from "./sections/Hero"
+import { About } from "./sections/About"
+import { Portfolio } from "./sections/Portfolio"
+import { Contact } from "./sections/Contact"
+import { Services } from "./sections/Services"
+import { createBrowserRouter, RouterProvider } from "react-router-dom"
+import { Root } from "./sections/Root"
 
-  return (
-    <>
-      <h1 className="text-2xl font-bold text-lime-600 ">hello from react</h1>
-    </>
-  )
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Root />,
+    children: [
+      {
+        path: "/",
+        element: <Hero />
+      },
+      {
+        path: "/about",
+        element: <About />
+      },
+      {
+        path: "/portfolio",
+        element: <Portfolio />
+      },
+      {
+        path: "/contact",
+        element: <Contact />
+      },
+      {
+        path: "/competences",
+        element: <Services />
+      }
+    ]
+  }
+])
+
+
+
+const App = () =>{
+
+  return <RouterProvider router={router} />
 }
 
-export default App
+export default App;
