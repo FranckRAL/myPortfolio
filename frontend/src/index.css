@@ -140,18 +140,18 @@
   }
 
   .navigation{
-    @apply bg-slate-800 h-screen md:w-1/5 transition-all duration-300 ease-in-out w-1/2 py-6;
+    @apply bg-slate-800 h-screen md:w-1/5 w-2/3 py-6 flex flex-col  absolute md:relative  transition-all duration-300 ease-in-out overflow-hidden ;
   }
 
   .content{
-    @apply bg-slate-700 h-screen md:w-4/5 transition-all duration-300 ease-in-out  w-full;
+    @apply bg-slate-700 md:h-screen h-fit md:w-4/5 transition-all duration-300 ease-in-out  w-full;
     
   }
 }
 
 @layer utilities {
   .padding {
-    @apply sm:px-16 px-8 sm:py-24 py-12;
+    @apply sm:px-16 px-8 sm:py-20 py-12;
   }
 
   .padding-x {
@@ -178,3 +178,29 @@
     @apply sm:pb-24 pb-12;
   }
 }
+
+  progress[value] {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 10px;
+  }
+
+  progress[value]::-webkit-progress-bar {
+    background-color: #eee;
+    border-radius: 2px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+  }
+
+  progress[value]::-webkit-progress-value {
+    background-image: -webkit-linear-gradient(
+        -45deg,
+        transparent 33%,
+        rgba(0, 0, 0, 0.1) 33%,
+        rgba(0, 0, 0, 0.1) 66%,
+        transparent 66%
+      ),
+      -webkit-linear-gradient(top, rgba(255, 255, 255, 0.25), rgba(0, 0, 0, 0.25)),
+      -webkit-linear-gradient(left,  #ff8e40, #b1ff40);
+    border-radius: 2px;
+    background-size: 35px 20px, 100% 100%, 100% 100%; 
+  }

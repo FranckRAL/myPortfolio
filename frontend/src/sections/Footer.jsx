@@ -1,8 +1,8 @@
-import { SocialLink } from "../components/SocialLink"
+import { SocialLink } from "../components/navigations/SocialLink"
 import { socialMedia } from "../assets/icons"
 export const Footer = () => {
   return (
-    <footer>
+    <footer className="">
       <address>
         <ul className="flex justify-center items-center">
           {socialMedia.map((item, index) => (
