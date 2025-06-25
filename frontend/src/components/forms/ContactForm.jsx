@@ -3,7 +3,7 @@ import { Input } from "./Input"
 import { Textarea } from "./Textarea"
 export const ContactForm = ({onSubmitHandler}) => {
   return (
-    <form className="flex flex-col gap-4 max-w-2xl mx-auto ">
+    <form className="flex flex-col gap-4  ">
         <ul className="flex flex-col gap-5">
             <li>
                 <Input type="email" name="email" placeholder="example@host.com" />

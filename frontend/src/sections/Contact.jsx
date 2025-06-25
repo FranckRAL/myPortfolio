@@ -11,25 +11,10 @@ const onsubmitHandler = (e) => {
     e.target.reset(); // Reset the form after submission
   }
   return (
-    <section className="padding">
+    <section className="padding w-[90vw] md:w-[80vw] lg:w-[60vw] xl:w-[50vw]">
       <SectionTitle title="Contact me" />
       <div className="mt-14 md:mt-5">
         <ContactForm onSubmitHandler={onsubmitHandler}/>
-      </div>
-      <div className="flex  items-center justify-center mt-30">
-        <p className="text-gray-300 text-center poppins-light text-lg">
-          Join me on 
-        </p>
-        <address>
-          <ul className="flex justify-center items-center">
-            {socialMedia.map((social, index) => (
-              <li key={index} className="inline-block mx-2">
-                <SocialLink name={social.name} link={social.link} icon={social.icon}/>
-              </li>  
-            
-            ))}
-          </ul>
-        </address>
       </div>
     </section>
   )

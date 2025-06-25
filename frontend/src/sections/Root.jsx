@@ -1,44 +1,57 @@
-import { useRef, useState } from "react"
-import { Outlet } from "react-router-dom"
+import { useState } from "react"
+import { Outlet, useLocation } from "react-router-dom"
 import { navItems } from "../assets/constant/constant"
 import { avatar } from "../assets/img"
 import { Brand } from "../components/Brand"
 import { Navigation } from "./Navigation"
 import { Footer } from "./Footer"
+import { AnimatePresence, motion } from "framer-motion"
 
 export const Root = () => {
-  const [isNavShow, setIsNavShow] = useState(false)
-  const refBtn = useRef(null)
-  
-  
+  const [menuOpen, setMenuOpen] = useState(false)
+  const location = useLocation()
+
   return (
-    <div className="App h-screen mx-auto max-container flex gap-0 relative bg-slate-700">
-      <button ref={refBtn} className="hamburger md:hidden absolute top-4 left-4 z-50 cursor-pointer transition-all duration-300 ease" onClick={() => setIsNavShow(!isNavShow)} aria-label="Toggle Navigation" >
-        {
-          !isNavShow && <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
-        </svg> 
-        
-        } 
-        {
-          isNavShow && <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-        </svg>
-        }
-      </button>
-        <section className={`navigation ${isNavShow ? 'translate-x-[0]' : '-translate-x-full md:translate-x-0'}`}>
-          <Brand brand="Franck Andritina" avatar={avatar}/>
-          <Navigation navItems={navItems} navLinkHandler={() => refBtn.current.click()}/>
-          <div className="mt-auto mb-5">
-            <Footer />
-          </div>
-      </section>
-      
-      <main className="content">
-          <Outlet />
+    <div className="App min-h-screen flex flex-col bg-slate-700 md:min-h-screen">
+      <div className="bg-slate-800  px-8 py-4 shadow-md sticky top-0 z-50 ">
+        <header className="w-full  flex items-center justify-between max-container">
+        <div className="flex items-center gap-4">
+          <Brand brand="Franck Andritina" avatar={avatar} />
+        </div>
+        {/* Desktop nav */}
+        <nav className="hidden md:block">
+          <Navigation navItems={navItems} />
+        </nav>
+        {/* Hamburger */}
+        <button
+          className="md:hidden flex flex-col justify-center items-center w-10 h-10 group z-50"
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="Menu"
+        >
+          <span className={`block h-0.5 w-6 bg-white my-1 rounded transition-all duration-300 ${menuOpen ? "rotate-45 translate-y-2" : ""}`}></span>
+          <span className={`block h-0.5 w-6 bg-white my-1 rounded transition-all duration-300 ${menuOpen ? "opacity-0" : ""}`}></span>
+          <span className={`block h-0.5 w-6 bg-white my-1 rounded transition-all duration-300 ${menuOpen ? "-rotate-45 -translate-y-2" : ""}`}></span>
+        </button>
+        {/* Mobile nav */}
+        <nav className={`fixed top-0 left-0 w-full h-full bg-slate-900 bg-opacity-95 flex flex-col items-center justify-center z-40 transition-all duration-300 ${menuOpen ? "translate-x-0" : "-translate-x-full"} md:hidden`}>
+          <Navigation navItems={navItems} navLinkHandler={() => setMenuOpen(false)} direction="col" />
+        </nav>
+      </header>
+      </div>
+      <main className="max-container flex-1">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={location.pathname}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -30 }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
+          >
+            <Outlet />
+          </motion.div>
+        </AnimatePresence>
       </main>
+      <Footer />
     </div>
   )
 }
-
-
