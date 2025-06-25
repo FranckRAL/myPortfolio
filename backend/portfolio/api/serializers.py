@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer
-from base.models import Post  # Import the Post model from your app
+from portfolio.models import Post  # Import the Post model from your app
 #     'ENGINE': 'django.db.backends.sqlite3',
 
 class PostSerializer(ModelSerializer):

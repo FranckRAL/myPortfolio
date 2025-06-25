@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'rest_framework', #REST framework for building APIs
     'corsheaders', #CORS headers for cross-origin requests
     
-    'base',
+    'portfolio.apps.PorfolioConfig',
 ]
 
 CORS_ALLOWED_ORIGINS = [
