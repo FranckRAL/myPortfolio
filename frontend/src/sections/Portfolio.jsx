@@ -3,12 +3,15 @@ import { fetchProjects } from "../assets/constant/constant"
 import { ProjectCard } from "../components/ProjectCard"
 import { SectionTitle } from "../components/SectionTitle"
 import { motion, AnimatePresence } from "framer-motion"
+import {SkeletonCard} from "../components/SkeletonCard"
 
 export const Portfolio = () => {
   const [projects, setProjects] = useState([])
   const [selectedProject, setSelectedProject] = useState(null);
+  const [loading, setLoading] = useState(true)
+
   useEffect(() => {
-    fetchProjects().then(setProjects).catch(console.error)
+    fetchProjects().then(setProjects).catch(console.error).finally(()=>setLoading(false))
   }, [])
 
   const openModal = (projects) => setSelectedProject(projects)
@@ -21,7 +24,9 @@ export const Portfolio = () => {
         <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
           {
-            projects.map((project, index) => (
+            loading
+            ? Array.from({length: 3}).map((_, index) => <SkeletonCard key={index}/>)
+            : projects.map((project, index) => (
               <li key={index} className="mb-6">
                 <ProjectCard {...project} projectDetailsHandler={(e) => {
                   e.preventDefault();
