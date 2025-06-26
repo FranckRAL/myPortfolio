@@ -1,5 +1,5 @@
 from rest_framework import routers
-from .views import TechnologyViewSet, ProjectViewSet, VisitorViewSet, MessageViewSet
+from .views import TechnologyViewSet, ProjectViewSet, VisitorViewSet, MessageViewSet, ServiceViewSet
 from django.urls import path, include
 
 router = routers.DefaultRouter()
@@ -7,6 +7,7 @@ router.register(r'technologies', TechnologyViewSet)
 router.register(r'projects', ProjectViewSet)
 router.register(r'visitors', VisitorViewSet)
 router.register(r'messages', MessageViewSet)
+router.register(r'services', ServiceViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),

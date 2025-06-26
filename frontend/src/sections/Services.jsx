@@ -1,8 +1,15 @@
-import { servicesList } from "../assets/constant/constant"
+import { useState, useEffect } from "react"
+import { fetchServices } from "../assets/constant/constant"
 import { SectionTitle } from "../components/SectionTitle"
 import { ServiceCard } from "../components/ServiceCard"
 
 export const Services = () => {
+  const [services, setServices] = useState([])
+
+  useEffect(() => {
+    fetchServices().then(setServices).catch(console.error)
+  }, [])
+  
   return (
     <section className="padding">
         <SectionTitle title="Best Services for you"/>
@@ -12,7 +19,7 @@ export const Services = () => {
             </p>
             <div>
               <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-4">
-                {servicesList.map((service, index) => (
+                {services.map((service, index) => (
                 <li key={index}>
                   <ServiceCard {...service} />
                 </li>

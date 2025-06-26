@@ -1,7 +1,8 @@
 const API_URL = 'http://localhost:8000/api/'
+const MEDIA_URL = 'http://localhost:8000/media/';
 
 async function fetchSomething(params) {
-  const response = await fetch(`${API_URL}/${params}`);
+  const response = await fetch(`${API_URL}${params}`);
   if (!response.ok) {
     throw new Error("Failed to fetch projects");
   }
@@ -12,6 +13,30 @@ async function fetchProjects() {
     return fetchSomething('projects')
 }
 
+async function fetchServices() {
+    return fetchSomething('services')
+}
+
+async function fetchImages(imageName) {
+    return `${MEDIA_URL}images/me/${imageName}`;
+}
+
+
+async function sendMessage(data) {
+  const response = await fetch(`${API_URL}messages/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data)
+  });
+  if (!response.ok) {
+    throw new Error("Failed to send message");
+  }
+  return await response.json();
+}
+
+
 const navItems = [
   {label: 'Home', path: '/'},
   {label: 'Portfolio', path: '/portfolio'},
@@ -20,30 +45,6 @@ const navItems = [
   {label: 'Contact', path: '/contact'},
 ];
 const bio = "I'm a web developer with a passion for creating dynamic and responsive web applications. My goal is to deliver high-quality code and innovative solutions that meet the needs of my clients.";
-
-// const projects = [
-//   {
-//     title: 'Project One',
-//     description: 'A web application that allows users to manage their tasks efficiently.',
-//     technologies: ['React', 'Node.js', 'MongoDB'],
-//     link: '',
-//     img: 'https://yavuzceliker.github.io/sample-images/image-27.jpg'
-//   },
-//   {
-//     title: 'Project Two',
-//     description: 'An e-commerce platform that provides a seamless shopping experience.',
-//     technologies: ['Vue.js', 'Express', 'MySQL'],
-//     link: '',
-//     img: 'https://yavuzceliker.github.io/sample-images/image-37.jpg'
-//   },
-//   {
-//     title: 'Project Three',
-//     description: 'A social media application that connects users with similar interests.',
-//     technologies: ['Angular', 'Django', 'PostgreSQL'],
-//     link: '',
-//     img: 'https://yavuzceliker.github.io/sample-images/image-250.jpg'
-//   }
-// ];
 
 
 
@@ -78,33 +79,14 @@ const tabsAbout = [
     },
   ];
 
-const servicesList = [
-  {
-    title: 'Web Development',
-    description: 'Building responsive and dynamic web applications using modern technologies.',
-    icon: 'https://yavuzceliker.github.io/sample-images/image-1.jpg'
-  },
-  {
-    title: 'UI/UX Design',
-    description: 'Creating user-friendly interfaces and enhancing user experience.',
-    icon: 'https://yavuzceliker.github.io/sample-images/image-2.jpg'
-  },
-  {
-    title: 'SEO Optimization',
-    description: 'Improving website visibility and search engine rankings.',
-    icon: 'https://yavuzceliker.github.io/sample-images/image-3.jpg'
-  },
-  {
-    title: 'Mobile App Development',
-    description: 'Developing a cross plateforms mobile applications.',
-    icon: 'https://yavuzceliker.github.io/sample-images/image-4.jpg'
-  }
-];
+
 export {
     navItems,
     bio,
-    fetchProjects,
     tabsAbout,
     skills,
-    servicesList
+    fetchProjects,
+    fetchServices,
+    fetchImages,
+    sendMessage,
 }

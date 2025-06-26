@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Technology, Project, Visitor, Message
+from .models import Technology, Project, Visitor, Message, Service
 
 class TechnologySerializer(serializers.ModelSerializer):
     class Meta:
@@ -20,4 +20,9 @@ class VisitorSerializer(serializers.ModelSerializer):
 class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
+        fields = '__all__'
+        
+class ServiceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Service
         fields = '__all__'

@@ -36,3 +36,11 @@ class Message(models.Model):
 
     def __str__(self):
         return f"Message from {self.email} - {self.subject}"
+    
+class Service(models.Model):
+    title = models.CharField(max_length=100)
+    description = models.CharField(max_length=200)
+    image = models.ImageField(upload_to='images/services')
+    
+    def __str__(self):
+        return f"service: {self.title}"
