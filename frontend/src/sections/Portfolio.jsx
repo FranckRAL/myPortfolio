@@ -1,8 +1,14 @@
-import { projects } from "../assets/constant/constant"
+import { useEffect, useState } from "react"
+import { fetchProjects } from "../assets/constant/constant"
 import { ProjectCard } from "../components/ProjectCard"
 import { SectionTitle } from "../components/SectionTitle"
 
 export const Portfolio = () => {
+  const [projects, setProjects] = useState([])
+  useEffect(() => {
+    fetchProjects().then(setProjects).catch(console.error)
+  }, [])
+  
   const projectDetailsHandler = (project) => {
     return (e) => {
       e.preventDefault();

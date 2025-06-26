@@ -1,3 +1,17 @@
+const API_URL = 'http://localhost:8000/api/'
+
+async function fetchSomething(params) {
+  const response = await fetch(`${API_URL}/${params}`);
+  if (!response.ok) {
+    throw new Error("Failed to fetch projects");
+  }
+  return await response.json();
+}
+
+async function fetchProjects() {
+    return fetchSomething('projects')
+}
+
 const navItems = [
   {label: 'Home', path: '/'},
   {label: 'Portfolio', path: '/portfolio'},
@@ -7,29 +21,33 @@ const navItems = [
 ];
 const bio = "I'm a web developer with a passion for creating dynamic and responsive web applications. My goal is to deliver high-quality code and innovative solutions that meet the needs of my clients.";
 
-const projects = [
-  {
-    title: 'Project One',
-    description: 'A web application that allows users to manage their tasks efficiently.',
-    technologies: ['React', 'Node.js', 'MongoDB'],
-    link: '',
-    img: 'https://yavuzceliker.github.io/sample-images/image-27.jpg'
-  },
-  {
-    title: 'Project Two',
-    description: 'An e-commerce platform that provides a seamless shopping experience.',
-    technologies: ['Vue.js', 'Express', 'MySQL'],
-    link: '',
-    img: 'https://yavuzceliker.github.io/sample-images/image-37.jpg'
-  },
-  {
-    title: 'Project Three',
-    description: 'A social media application that connects users with similar interests.',
-    technologies: ['Angular', 'Django', 'PostgreSQL'],
-    link: '',
-    img: 'https://yavuzceliker.github.io/sample-images/image-250.jpg'
-  }
-];
+// const projects = [
+//   {
+//     title: 'Project One',
+//     description: 'A web application that allows users to manage their tasks efficiently.',
+//     technologies: ['React', 'Node.js', 'MongoDB'],
+//     link: '',
+//     img: 'https://yavuzceliker.github.io/sample-images/image-27.jpg'
+//   },
+//   {
+//     title: 'Project Two',
+//     description: 'An e-commerce platform that provides a seamless shopping experience.',
+//     technologies: ['Vue.js', 'Express', 'MySQL'],
+//     link: '',
+//     img: 'https://yavuzceliker.github.io/sample-images/image-37.jpg'
+//   },
+//   {
+//     title: 'Project Three',
+//     description: 'A social media application that connects users with similar interests.',
+//     technologies: ['Angular', 'Django', 'PostgreSQL'],
+//     link: '',
+//     img: 'https://yavuzceliker.github.io/sample-images/image-250.jpg'
+//   }
+// ];
+
+
+
+
 
 const tabsAbout = [
     { id: "tab1", label: "Bio" },
@@ -85,7 +103,7 @@ const servicesList = [
 export {
     navItems,
     bio,
-    projects,
+    fetchProjects,
     tabsAbout,
     skills,
     servicesList
