@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { fetchProjects } from "../assets/constant/constant"
+import { fetchProjects, fetchProjectsDetails } from "../assets/constant/constant"
 import { ProjectCard } from "../components/ProjectCard"
 import { SectionTitle } from "../components/SectionTitle"
 import { motion, AnimatePresence } from "framer-motion"
@@ -8,14 +8,28 @@ import {SkeletonCard} from "../components/SkeletonCard"
 export const Portfolio = () => {
   const [projects, setProjects] = useState([])
   const [selectedProject, setSelectedProject] = useState(null);
+  const [projectDetail, setProjectDetail] = useState(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     fetchProjects().then(setProjects).catch(console.error).finally(()=>setLoading(false))
   }, [])
 
-  const openModal = (projects) => setSelectedProject(projects)
-  const closeModal = () => setSelectedProject(null)
+  useEffect(() => {
+    if (selectedProject) {
+    fetchProjectsDetails(selectedProject)
+      .then(setProjectDetail)
+      .catch(console.error);
+  } else {
+    setProjectDetail(null);
+  }
+  }, [selectedProject])
+
+  const openModal = (project_id) => setSelectedProject(project_id)
+  const closeModal = () => {
+    setSelectedProject(null)
+    setProjectDetail(null)
+  }
 
   return (
     <div className='padding'>
@@ -30,7 +44,7 @@ export const Portfolio = () => {
               <li key={index} className="mb-6">
                 <ProjectCard {...project} projectDetailsHandler={(e) => {
                   e.preventDefault();
-                  openModal(project)
+                  openModal(project.id)
                 }}
                 />
 
@@ -44,7 +58,7 @@ export const Portfolio = () => {
       </div>
 
       <AnimatePresence>
-        {selectedProject && (
+        {selectedProject && projectDetail && (
           <motion.div
             className="fixed inset-0 flex items-center justify-center z-50 backdrop-blur-[2px]"
             initial={{ opacity: 0 }}
@@ -67,18 +81,18 @@ export const Portfolio = () => {
               </button>
               <div className="w-2/5 min-w-[200px] max-w-[320px] flex-shrink-0 flex items-center justify-center bg-slate-800">
                 <img
-                  src={selectedProject.image}
-                  alt={selectedProject.title}
+                  src={projectDetail.image}
+                  alt={projectDetail.title}
                   className="object-cover w-full h-full max-h-96 rounded-l-lg"
                   style={{ maxHeight: 350 }}
                 />
               </div>
               <div className="w-3/5 p-8 flex flex-col justify-center">
-                <h2 className="text-2xl font-bold mb-2 text-white">{selectedProject.title}</h2>
-                <p className="mb-2 text-slate-200">{selectedProject.description}</p>
+                <h2 className="text-2xl font-bold mb-2 text-white">{projectDetail.title}</h2>
+                <p className="mb-2 text-slate-200">{projectDetail.description}</p>
                 <hr className="my-2 border-slate-500" />
                 <ul className="flex flex-wrap gap-2 mt-2">
-                  {selectedProject.technologies.map((technology) =>
+                  {projectDetail.technologies?.map((technology) =>
                     <li key={technology.id} className="bg-slate-600 text-white px-2 py-1 rounded text-xs">
                       {technology.name}
                     </li>

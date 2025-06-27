@@ -12,7 +12,7 @@ class ProjectListCreateView(APIView):
 
     def get(self, request):
         projects = Project.objects.all()
-        serializer = ProjectSerializer(projects, many=True)
+        serializer = ProjectSerializer(projects, many=True, context={'request': request})
         return Response(serializer.data)
 
     def post(self, request):
@@ -38,7 +38,7 @@ class ProjectDetailView(APIView):
         project = self.get_object(pk)
         if not project:
             return Response({'detail': 'Not found.'}, status=status.HTTP_404_NOT_FOUND)
-        serializer = ProjectSerializer(project)
+        serializer = ProjectSerializer(project, context={'request': request})
         return Response(serializer.data)
 
     def put(self, request, pk):
@@ -66,7 +66,7 @@ class ServiceListCreateView(APIView):
     
     def get(self, request):
         projects = Service.objects.all()
-        serializer = ServiceSerializer(projects, many=True)
+        serializer = ServiceSerializer(projects, many=True, context={'request': request})
         return Response(serializer.data)
     
     def post(self, request):

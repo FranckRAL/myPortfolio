@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:8000/api/'
+const API_URL = 'http://localhost:8000/api/';
 const MEDIA_URL = 'http://localhost:8000/media/';
 
 async function fetchSomething(params) {
@@ -11,6 +11,10 @@ async function fetchSomething(params) {
 
 async function fetchProjects() {
     return fetchSomething('projects')
+}
+
+async function fetchProjectsDetails(project_id) {
+    return fetchSomething(`projects/${project_id}`)
 }
 
 async function fetchServices() {
@@ -89,4 +93,5 @@ export {
     fetchServices,
     fetchImages,
     sendMessage,
+    fetchProjectsDetails,
 }
