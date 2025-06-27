@@ -20,8 +20,8 @@ export const NavLinkItem = ({ path, label, navLinkHandler }) => {
               <motion.span
                 layoutId="navbar-underline"
                 className="absolute left-0 right-0 -bottom-1 h-1 bg-yellow-500 rounded"
-                style={{ zIndex: 1 }}
-                transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                style={{ zIndex: 1}}
+                
               />
             )}
           </>

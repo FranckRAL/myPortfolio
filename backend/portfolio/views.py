@@ -106,7 +106,14 @@ class VisitorListCreateView(APIView):
         return Response(serializer.data)
     
     def post(self, request):
-        serializer = VisitorSerializer(data=request.data)
+        # Get IP from request if not provided
+        ip_address = request.data.get('ip_address') or request.META.get('REMOTE_ADDR')
+        user_agent = request.data.get('user_agent') or request.META.get('HTTP_USER_AGENT')
+        data = {
+            'ip_address': ip_address,
+            'user_agent': user_agent,
+        }
+        serializer = VisitorSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)

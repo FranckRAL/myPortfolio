@@ -1,7 +1,6 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Outlet, useLocation } from "react-router-dom"
-import { navItems } from "../assets/constant/constant"
-import { avatar } from "../assets/img"
+import { fetchImages, navItems } from "../assets/constant/constant"
 import { Brand } from "../components/Brand"
 import { Navigation } from "./Navigation"
 import { Footer } from "./Footer"
@@ -10,13 +9,21 @@ import { AnimatePresence, motion } from "framer-motion"
 export const Root = () => {
   const [menuOpen, setMenuOpen] = useState(false)
   const location = useLocation()
+  const [avatar, setAvatar] = useState(null)
+
+  useEffect(() => {
+    fetchImages('logo.png').then(setAvatar).catch(console.error)
+  }, [])
+  
 
   return (
     <div className="App min-h-screen flex flex-col bg-slate-700 md:min-h-screen">
       <div className="bg-slate-800  px-8 py-4 shadow-md sticky top-0 z-50 ">
         <header className="w-full  flex items-center justify-between max-container">
         <div className="flex items-center gap-4">
-          <Brand brand="Franck Andritina" avatar={avatar} />
+          {
+            avatar && <Brand brand="Franck Andritina" avatar={avatar} />
+          }
         </div>
         {/* Desktop nav */}
         <nav className="hidden md:block">

@@ -40,6 +40,19 @@ async function sendMessage(data) {
   return await response.json();
 }
 
+async function sendVisitor(data) {
+  const response = await fetch(`${API_URL}visitors/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data)
+  });
+  if (!response.ok) {
+    throw new Error("Failed to send visitor info");
+  }
+  return await response.json();
+}
 
 const navItems = [
   {label: 'Home', path: '/'},
@@ -84,6 +97,7 @@ const tabsAbout = [
   ];
 
 
+  
 export {
     navItems,
     bio,
@@ -94,4 +108,5 @@ export {
     fetchImages,
     sendMessage,
     fetchProjectsDetails,
+    sendVisitor,
 }
